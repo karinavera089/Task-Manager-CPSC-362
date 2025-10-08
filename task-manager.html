@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+    <script> 
+        if (localStorage.getItem("loggedIn") !== "yes") {
+            window.location = "login.html";
+        }
+    </script>
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -385,7 +391,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>✅ Task Manager</h1>
+            <h1> Task Manager</h1>
             <p>Organize your tasks and boost your productivity</p>
         </div>
 
@@ -561,7 +567,6 @@
                 } else {
                     taskList.innerHTML = filteredTasks
                         .sort((a, b) => {
-                            // Sort by completion status, then by priority, then by date
                             if (a.completed !== b.completed) {
                                 return a.completed ? 1 : -1;
                             }
@@ -610,17 +615,14 @@
 
             saveTasks() {
                 const tasksData = JSON.stringify(this.tasks);
-                // Store in memory for this session (since localStorage is not supported)
                 window.taskData = tasksData;
             }
 
             loadTasks() {
                 try {
-                    // Load from memory if available
                     if (window.taskData) {
                         this.tasks = JSON.parse(window.taskData);
                     } else {
-                        // Start with some example tasks for demonstration
                         this.tasks = [
                             {
                                 id: 1,
@@ -650,9 +652,14 @@
                 }
             }
         }
-
-        // Initialize the task manager
         const taskManager = new TaskManager();
     </script>
 </body>
 </html>
+<button id="logoutBtn">Logout</button>
+<script>
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    localStorage.removeItem("loggedIn");
+    window.location = "login.html";
+  });
+</script>

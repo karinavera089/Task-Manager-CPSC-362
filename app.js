@@ -23,8 +23,11 @@ class TaskManager {
                 });
                 
                 document.getElementById("logoutBtn").addEventListener("click", () => {
-                    localStorage.removeItem("loggedIn");
-                    window.location.replace("/");
+                    if (window.confirm('Are you sure you want to clear all sticky notes? This cannot be undone.')){
+                       this.tasks = [];
+                       this.saveTasks();
+                       this.render(); 
+                    }
                 });
             }
 
